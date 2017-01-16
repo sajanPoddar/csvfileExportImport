@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('importExport', 'CsvfileController@importExport');
+Route::get('downloadExcel/{type}', 'CsvfileController@downloadExcel');
+Route::post('importExcel', 'CsvfileController@importExcel');
