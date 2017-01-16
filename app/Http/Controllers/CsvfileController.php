@@ -54,11 +54,11 @@ class CsvfileController extends Controller
 
 					if(!empty($value)){
 
-						foreach ($value as $v) {		
+								
 
-							$insert[] = ['title' => $v['title'], 'description' => $v['description']];
+							$insert[] = ['title' => $value['title'], 'description' => $value['description']];
 							
-						}
+						
 
 					}
 
