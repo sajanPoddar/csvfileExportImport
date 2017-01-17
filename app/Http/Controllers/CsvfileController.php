@@ -52,28 +52,38 @@ class CsvfileController extends Controller
 
 				foreach ($data->toArray() as $key => $value) {
 
-					if(!empty($value)){
+						$id = $value['id'];
+						if(!empty($value)){
+							$insert['title'] =  $value['title'];
+							$insert['description']  = $value['description'];
 
-								
 
-							$insert[] = ['title' => $value['title'], 'description' => $value['description']];
+						}
+					if(!empty($insert)){
+
+						$q = Item::find($id);
+						if($q != null)
+						{	
+							// dd('test');
+							$r =	$q->update($insert);
 							
+						}
+						else
+						{
+						Item::insert($insert);
+
 						
+						} 
 
-					}
-
+						}
+					
 				}
+				return back()->with('success','Insert Record successfully.');
 
 
 				
 
-				if(!empty($insert)){
-
-					Item::insert($insert);
-
-					return back()->with('success','Insert Record successfully.');
-
-				}
+				
 
 
 			}
