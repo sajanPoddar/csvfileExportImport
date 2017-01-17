@@ -1,91 +1,57 @@
+<!DOCTYPE html>
 <html>
-<
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyB6K1CFUQ1RwVJ-nyXxd6W0rfiIBe12Q&libraries=places"
-  type="text/javascript"></script>
-  <script type="text/javascript">
-                var map;        
-                        var myCenter=new google.maps.LatLng(53, -1.33);
-            var marker=new google.maps.Marker({
-                position:myCenter
-            });
-
-            function initialize() {
-              var mapProp = {
-                  center:myCenter,
-                  zoom: 14,
-                  draggable: false,
-                  scrollwheel: false,
-                  mapTypeId:google.maps.MapTypeId.ROADMAP
-              };
-
-              map=new google.maps.Map(document.getElementById("map-canvas"),mapProp);
-              marker.setMap(map);
-
-              google.maps.event.addListener(marker, 'click', function() {
-
-                infowindow.setContent(contentString);
-                infowindow.open(map, marker);
-
-              }); 
-            };
-            google.maps.event.addDomListener(window, 'load', initialize);
-
-            google.maps.event.addDomListener(window, "resize", resizingMap());
-
-            $('#myMapModal').on('show.bs.modal', function() {
-               //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
-               resizeMap();
-            })
-
-            function resizeMap() {
-               if(typeof map =="undefined") return;
-               setTimeout( function(){resizingMap();} , 400);
-            }
-
-            function resizingMap() {
-               if(typeof map =="undefined") return;
-               var center = map.getCenter();
-               google.maps.event.trigger(map, "resize");
-               map.setCenter(center); 
-            }
-
-            </script>
-
-
-<body>
-
-<div class="container">
-        <div class="row">
-            <div id="map-canvas"></div>
-        </div>
-
-    </div>
- 
-    <script type="text/javascript">
- 
-            var mapOptions = {
-                zoom: 4,
-                center: new google.maps.LatLng({{$items[0]->location}})
-            }
-            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
- 
- 
-            @foreach($items as $item)
-                var marker{{$item->id}} = new google.maps.Marker({
-                    position: new google.maps.LatLng({{$item->location}}),
-                    map: map,
-                    title: "{{$item->title}}"
-                });
-            @endforeach
- 
- 
+  <head>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?sensor=false">
     </script>
-
-
-</body>
-
-
-    </body>
-    </html>
+    <script type="text/javascript">
+        var map = null;
+            function showlocation() {
+               // One-shot position request.
+                navigator.geolocation.getCurrentPosition(callback);
+            }
+        
+      function callback(position) {
+        
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        
+             document.getElementById('latitude').innerHTML = lat;
+         document.getElementById('longitude').innerHTML = lon;
+            
+        var latLong = new google.maps.LatLng(lat, lon);
+        
+                var marker = new google.maps.Marker({
+                    position: latLong
+                });      
+                
+                marker.setMap(map);
+        map.setZoom(8);
+        map.setCenter(marker.getPosition());
+      }
+      
+      google.maps.event.addDomListener(window, 'load', initMap);
+      function initMap() {
+        var mapOptions = {
+          center: new google.maps.LatLng(0, 0),
+          zoom: 1,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"), 
+                                          mapOptions);
+      
+      }
+    </script>
+  </head>
+  <body>
+    <center>
+        <input type="button" value="Show my location on Map"
+                onclick="javascript:showlocation()" />   <br/>
+    </center>
+                
+        Latitude: <span id="latitude"></span>       <br/>
+        Longitude: <span id="longitude"></span>
+    <br/><br/>
+    <div id="map-canvas"/>
+  </body>
+</html>
