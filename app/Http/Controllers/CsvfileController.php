@@ -95,4 +95,11 @@ class CsvfileController extends Controller
 		return back()->with('error','Please Check your file, Something is wrong there.');
 
 	}
+	public function map()
+	{
+		$items = Item::all();
+                //$items = Item::distance(0.1,'45.05,7.6667')->get();
+ 	
+		return view('map')->with(['items'=>$items]);
+	}
 }

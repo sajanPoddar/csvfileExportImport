@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
            $table->text('description');
            $table->timestamps();
        });
+        \DB::statement('ALTER TABLE items ADD location POINT' );
     }
 
     /**
