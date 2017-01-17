@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <style>
+      #map-canvas{
+        width:500px;
+        height: 250px;
+      }
+  </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?sensor=false">
     </script>
