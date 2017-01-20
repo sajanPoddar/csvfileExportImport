@@ -14,7 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('allpost', 'PostController@index');
 Route::get('importExport', 'CsvfileController@importExport');
 Route::get('map', 'CsvfileController@map');
 Route::get('downloadExcel/{type}', 'CsvfileController@downloadExcel');
 Route::post('importExcel', 'CsvfileController@importExcel');
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
